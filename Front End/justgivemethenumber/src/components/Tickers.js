@@ -40,7 +40,7 @@ export default function Tickers() {
       body:ticker
     })
     .then(()=> {
-      setTimeout(fetchTickers(), 500)
+      fetchTickers()
     }, [])
   }
 
@@ -61,7 +61,7 @@ export default function Tickers() {
       body:editTickerMap[tickerAndPrice.ticker]
     })
     .then(()=> {
-      setTimeout(fetchTickers(), 500)
+      fetchTickers()
     }, [])
   }
 
@@ -74,7 +74,7 @@ export default function Tickers() {
       body:tickerName
     })
     .then(()=> {
-      setTimeout(fetchTickers(), 500)
+      fetchTickers()
     }, [])
     .then(() => {
       if (window.showError) {
@@ -115,12 +115,14 @@ export default function Tickers() {
           {apiError ?
             <div>
               <p>{apiError}</p>
-              <Button
-                size="medium"
-                color="primary"
-                variant="contained"
-                onClick={e => {handleClickDelete(e, apiError.split(' ')[3].slice(0, -1))}}
-              >Delete {apiError.split(' ')[3].slice(0, -1)}</Button>
+              {apiError.split(' ').length === 6 ? null :
+                <Button
+                  size="medium"
+                  color="primary"
+                  variant="contained"
+                  onClick={e => {handleClickDelete(e, apiError.split(' ')[3].slice(0, -1))}}
+                >Delete {apiError.split(' ')[3].slice(0, -1)}</Button>
+              }
             </div>
           : null}
           {tickersAndPrices ?
